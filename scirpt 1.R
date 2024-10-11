@@ -106,7 +106,27 @@ distinct(summary_table)
 
 
 # Challenge
+countrylifexp <- gapminder_data %>% 
+  group_by(country) %>% 
+  summarise(mean_lifeexp = mean(lifeExp)) %>% 
+  filter(mean_lifeexp == min(mean_lifeexp)|
+         mean_lifeexp == max(mean_lifeexp))
+
+
+#Goal: How many obsvervation I have per year
 
 gapminder_data %>% 
-  group_by(country)
-  summarise(mean_lifeexp = mean(LifeEx))
+  group_by(year) %>% 
+  count()
+
+# Goal: Add a new collumn 
+
+ gapminder_data2 <- gapminder_data %>% 
+   mutate(lifeExp_round = round(lifeExp))
+ 
+# Exporting csv 
+ 
+ write.csv(gapminder_data2, "gapminder_data2.csv")
+ 
+gapminder_data %>% 
+  mutate(below_30 = ifelse(lifeExp<30,"below 30", "30+"))
